@@ -117,7 +117,7 @@ class Package(object):
         
     def fpm_build(self, dependencies=None):
         if not self.is_python:
-            return True
+            return
 
         args = ["fpm", "-s", "python", "-f", "-t", "deb"]
 
@@ -137,16 +137,12 @@ class Package(object):
 
         args.append(fpm_name)
 
-        exitcode = 0
         with open(os.devnull, "w") as fnull:
-            p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=fnull)
-            exitcode = p.returncode 
-            result = p.stdout.read()
-            if exitcode != 0:
-                print "exitcode: %i" % (exitcode)
-                raise BuildPackageExcpetion(result)
-
-        return exitcode == 0 
+            try:
+                subprocess.check_output(args, stdout=subprocess.PIPE, stderr=fnull)
+            except subprocess.CalledProcessError, e:
+                raise BuildPackageExcpetion(e.otupt)
+        return
 
 
 def get_package_version(filename):
