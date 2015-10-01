@@ -1,4 +1,4 @@
 #!/bin/bash
 
-apt-get install ruby ruby-dev gcc make setuptools
+apt-get install ruby ruby-dev gcc make python-setuptools
 gem install fpm
