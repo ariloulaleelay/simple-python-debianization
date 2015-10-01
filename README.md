@@ -1,3 +1,4 @@
 # simple-python-debianization
-Create bunch of deb packages, using fpm
+
+Debianize pypi package using fpm. Extract and build missing dependencies recursively.
 
