@@ -141,7 +141,7 @@ class Package(object):
             try:
                 subprocess.check_output(args)
             except subprocess.CalledProcessError, e:
-                raise BuildPackageExcpetion(e.otupt)
+                raise BuildPackageExcpetion(e.output)
         return
 
 
