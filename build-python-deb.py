@@ -139,7 +139,7 @@ class Package(object):
 
         with open(os.devnull, "w") as fnull:
             try:
-                subprocess.check_output(args, stdout=subprocess.PIPE, stderr=fnull)
+                subprocess.check_output(args, stdout=subprocess.PIPE)
             except subprocess.CalledProcessError, e:
                 raise BuildPackageExcpetion(e.otupt)
         return
