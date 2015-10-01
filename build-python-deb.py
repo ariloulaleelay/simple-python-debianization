@@ -245,6 +245,7 @@ def optimistic_fix_packages(packages):
 
 
 def main():
+    os.environ['LC_ALL'] = 'C'
     parser = argparse.ArgumentParser()
     parser.add_argument('--package', help='package name', required=True)
     parser.add_argument('--version', help='required package version', default=None, required=True)
