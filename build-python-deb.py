@@ -9,6 +9,9 @@ import os
 
 # sorry for ugly code :(
 
+class BuildPackageExcpetion(RuntimeError):
+    pass
+
 class Package(object):
 
     @classmethod
@@ -136,7 +139,11 @@ class Package(object):
 
         exitcode = 0
         with open(os.devnull, "w") as fnull:
-            exitcode = subprocess.call(args, stdout=fnull, stderr=None)
+            p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=fnull)
+            result = p.stdout.read()
+            exitcode = p.returncode 
+            if exitcode != 0:
+                raise BuildPackageExcpetion(result)
 
         return exitcode == 0 
 
@@ -167,7 +174,10 @@ def generate_packages_first_pass(package, args):
 
         files = glob.glob("%s_*.deb" % (package.name))
         if len(files) == 0 or args.rebuild_existing_package:
-            if not package.fpm_build():
+            try:
+                package.fpm_build()
+            except BuildPackageExcpetion, e:
+                print "\tFAIL\n\t%s" % (e.message)
                 package.broken = True
                 continue
             files = glob.glob("%s_*.deb" % (package.name))
