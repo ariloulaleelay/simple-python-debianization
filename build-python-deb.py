@@ -102,7 +102,7 @@ class Package(object):
         self.broken = broken
         self.broken_dependency_number = False
         self.system_version = self.get_cached_version()
-        self.exists_in_system = self.compare_version(self.system_version, self.version) >= 0
+        self.exists_in_system = self.system_version is not None and self.compare_version(self.system_version, self.version) >= 0
         self.is_python = re.match(r'^python-(.*?)$', name) is not None 
         self.parents = []
 

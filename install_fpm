@@ -1,4 +1,4 @@
 #!/bin/bash
 
-apt-get install ruby ruby-dev
+apt-get install ruby ruby-dev gcc make
 gem install fpm
