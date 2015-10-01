@@ -140,9 +140,10 @@ class Package(object):
         exitcode = 0
         with open(os.devnull, "w") as fnull:
             p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=fnull)
-            result = p.stdout.read()
             exitcode = p.returncode 
+            result = p.stdout.read()
             if exitcode != 0:
+                print "exitcode: %i" % (exitcode)
                 raise BuildPackageExcpetion(result)
 
         return exitcode == 0 
